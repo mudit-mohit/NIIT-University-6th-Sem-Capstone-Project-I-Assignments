@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Text Box Demo</title>
+</head>
+<body>
+
+  <label for="textInput">Type something:</label>
+  <input type="text" id="textInput" oninput="updateText()" />
+
+  <p id="displayText">Typed text will be displayed here.</p>
+
+  <script>
+    function updateText() {
+      // Get the input value
+      var inputText = document.getElementById("textInput").value;
+
+      // Update the displayed text
+      document.getElementById("displayText").innerText = "You typed: " + inputText;
+    }
+  </script>
+
+</body>
+</html>
