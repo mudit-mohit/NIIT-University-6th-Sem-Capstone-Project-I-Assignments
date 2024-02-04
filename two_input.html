@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two-Way Text Box Demo</title>
+</head>
+<body>
+
+  <label for="textBox1">Text Box 1:</label>
+  <input type="text" id="textBox1" oninput="updateText('textBox1', 'textBox2')" />
+
+  <br>
+
+  <label for="textBox2">Text Box 2:</label>
+  <input type="text" id="textBox2" oninput="updateText('textBox2', 'textBox1')" />
+
+  <script>
+    function updateText(sourceId, targetId) {
+      // Get the input value from the source text box
+      var sourceText = document.getElementById(sourceId).value;
+
+      // Update the target text box with the input value
+      document.getElementById(targetId).value = sourceText;
+    }
+  </script>
+
+</body>
+</html>
+
