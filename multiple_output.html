@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation Example</title>
+  <style>
+    .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <form onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" />
+
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" />
+
+    <br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" />
+
+    <br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <span id="errorMessage" class="error-message"></span>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+
+      if (name === "" && email === "" && phone === "") {
+        // Display error message
+        document.getElementById("errorMessage").innerText = "Please fill in at least one field.";
+        return false;
+      } else if (name === "") {
+        // Bring focus to the first non-empty input box (email or phone)
+        document.getElementById("email").focus();
+        return false;
+      } else if (email === "") {
+        // Bring focus to the first non-empty input box (name or phone)
+        document.getElementById("name").focus();
+        return false;
+      } else if (phone === "") {
+        // Bring focus to the first non-empty input box (name or email)
+        document.getElementById("name").focus();
+        return false;
+      }
+
+      // Clear any previous error messages
+      document.getElementById("errorMessage").innerText = "";
+
+      // If all fields are filled, allow form submission
+      return true;
+    }
+  </script>
+
+</body>
+</html>
