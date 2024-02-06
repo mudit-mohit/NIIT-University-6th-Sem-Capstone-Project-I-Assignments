@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changing Heading</title>
+</head>
+<body>
+
+  <h1 id="heading">Capstone Project</h1>
+
+  <form onsubmit="changeHeadingColor(); return false;">
+    <label for="colorInput">Enter Color Name:</label>
+    <input type="text" id="colorInput" />
+    <button type="submit">Change Color</button>
+  </form>
+
+  <script>
+    function changeHeadingColor() {
+      // Get the color name from the input box
+      var colorName = document.getElementById("colorInput").value;
+
+      // Get the heading element
+      var heading = document.getElementById("heading");
+
+      // Set the heading color based on the input color name
+      heading.style.color = colorName;
+
+      // Clear the input box
+      document.getElementById("colorInput").value = "";
+    }
+  </script>
+
+</body>
+</html>
