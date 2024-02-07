@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Cycling Heading</title>
+</head>
+<body>
+
+  <h1 id="heading">Capstone Project</h1>
+
+  <script>
+    // Function to change the color of the heading in an RGB cycle
+    function cycleHeadingColor() {
+      var heading = document.getElementById("heading");
+      var colors = ["red", "green", "blue"];
+      var colorIndex = 0;
+
+      // Change color every 5 seconds
+      setInterval(function() {
+        heading.style.color = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+      }, 5000);
+    }
+
+    // Call the function to start the color cycling
+    cycleHeadingColor();
+  </script>
+
+</body>
+</html>
