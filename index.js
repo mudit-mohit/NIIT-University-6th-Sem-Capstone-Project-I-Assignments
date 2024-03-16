@@ -1,65 +1,45 @@
-var express = require('express');
-//var bodyParser = require('body-parser');
-//var multer = require('multer');
-//var upload = multer();
-var app = express();
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/my_db');
-app.use(express.json());
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+require('./auth');
 
-// for parsing application/xwww-
-app.use(express.urlencoded({ extended: true }));
-//form-urlencoded
+const app = express();
 
-// for parsing multipart/form-data
-//app.use(upload.array()); 
-app.use(express.static('public'));
-app.get('/', function (req, res) {
-   res.render('person');
-});
-var personSchema = mongoose.Schema({
-   name: String,
-   age: Number,
-   nationality: String
-});
-var Person = mongoose.model("Person", personSchema);
-app.set('view engine', 'ejs');
-app.set('views', './views');
-app.get('/person', function (req, res) {
-   res.render('person');
-});
-app.post('/person',  async function (req, res) {
-   var personInfo = req.body; //Get the parsed information
-   //console.log(personInfo)
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
 
-   if (!personInfo.name || !personInfo.age || !personInfo.nationality) {
-      res.render('show_message', {
-         message: "Sorry, you provided worng info", type: "error"
-      });
-   } else {
-      var newPerson = new Person({
-         name: personInfo.name,
-         age: personInfo.age,
-         nationality: personInfo.nationality
-      });
-      myPromise =await  newPerson.save()
-      if (myPromise!=null){
-            res.render('show_message', {
-               message: "New person added", type: "success", person: personInfo
-            });
-         }
-         else
-         {
-            res.render('show_message',
-               { message: "Database error", type: "error" });
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-         }
-      // for parsing application/json
-   }
+app.get('/', (req, res) => {
+  res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
 
-app.post('/', function (req, res) {
-   console.log(req.body);
-   res.send("recieved your request!");
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
+));
+
+app.get( '/auth/google/redirect',
+  passport.authenticate( 'google', {
+    successRedirect: '/protected',
+    failureRedirect: '/auth/google/failure'
+  })
+);
+
+app.get('/protected', isLoggedIn, (req, res) => {
+  res.send(`Hello ${req.user.displayName}`);
 });
-app.listen(3000);
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send('Goodbye!');
+});
+
+app.get('/auth/google/failure', (req, res) => {
+  res.send('Failed to authenticate..');
+});
+
+app.listen(3000, () => console.log('listening on port: 3000'));
