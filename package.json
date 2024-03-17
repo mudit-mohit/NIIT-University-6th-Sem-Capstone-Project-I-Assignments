@@ -1,18 +1,23 @@
 {
-  "name": "sam16",
+  "name": "google-oauth2",
   "version": "1.0.0",
-  "description": "",
+  "description": "Created for [this YouTube video](https://youtu.be/Q0a0594tOrc)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "mongoose": "^8.1.1",
-    "pug": "^3.0.2"
-  }
+    "express": "^4.18.3",
+    "express-session": "^1.17.1",
+    "passport": "^0.4.1",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "keywords": []
 }
